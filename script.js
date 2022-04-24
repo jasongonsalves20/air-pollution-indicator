@@ -7,10 +7,10 @@ const spchBtn = document.querySelector(".speech-btn");
 const errorLabel = document.querySelector("label[for='error-msg']");
 const componentsEle = document.querySelectorAll(".component-val");
 
-const appId = process.env.appId;
-const link = process.env.link;
-const key = process.env.key;
-const loct = process.env.loct;
+const appId = "c1d2d185956c5e93de7e48f777e18c9b";
+const link = "https://api.openweathermap.org/data/2.5/air_pollution";
+const key = "9a56d1219ae24157a4d7151ea0ea7862";
+const loct = "centralindia";
 
 const getUserLocation = () => {
     if (navigator.geolocation) {
