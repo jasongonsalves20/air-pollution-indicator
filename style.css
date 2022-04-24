@@ -44,7 +44,7 @@
 	border: 3px solid #d34545;
 }
 
-.search-btn {
+.search-btn, .speech-btn {
 	padding: 10px 14px;
 	background-color: #269fe6;
 	border: none;

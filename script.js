@@ -3,17 +3,20 @@ const lonInp = document.querySelector("#longitude");
 const airQuality = document.querySelector(".air-quality");
 const airQualityStat = document.querySelector(".air-quality-status");
 const srchBtn = document.querySelector(".search-btn");
+const spchBtn = document.querySelector(".speech-btn");
 const errorLabel = document.querySelector("label[for='error-msg']");
 const componentsEle = document.querySelectorAll(".component-val");
 
-const appId = "c1d2d185956c5e93de7e48f777e18c9b";
-const link = "https://api.openweathermap.org/data/2.5/air_pollution";
+const appId = process.env.appId;
+const link = process.env.link;
+const key = process.env.key;
+const loct = process.env.loct;
 
 const getUserLocation = () => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(onPostionGathered, onPostionGatherError);
     } else {
-        onPostionGatherError({ message: "Can't access location, Enter Co-ordinates manually." });
+        onPostionGatherError({ message: "\n\nError : Can't access location, Enter Co-ordinates manually." });
     }
 }
 
@@ -34,11 +37,39 @@ const getAirQuality = async (lat, lon) => {
     const airData = await rawData.json();
     
     if (rawData.status != 200) {
-        onPostionGatherError({ message: airData.message });
+        onPostionGatherError({ message: `\n\nError : ${airData.message}` });
     } else {
         setValueOfAir(airData);
         setComponentsOfAir(airData);
+        spchBtn.disabled = false;
+        spchBtn.style.backgroundColor = "#269fe6";
     }
+}
+
+const getAudio = async () => {
+    let text;
+    aqi = parseInt(airQuality.innerText);
+    airStat = airQualityStat.innerText;
+    text = `Based on the identified co-ordinates, The Air Quality Index value found is ${aqi}, which states that the air quality in your area is ${airStat}, Refer below for more information.`;
+
+    const SpeechSDK = window.SpeechSDK;
+    const speechConfig = SpeechSDK.SpeechConfig.fromSubscription(key, loct);
+    speechConfig.speechSynthesisLanguage = "en-IN";
+    speechConfig.speechSynthesisVoiceName = "en-IN-NeerjaNeural";
+    speechConfig.speechSynthesisOutputFormat = SpeechSDK.SpeechSynthesisOutputFormat.Audio16Khz32KBitRateMonoMp3;
+    const audioConfig = SpeechSDK.AudioConfig.fromDefaultSpeakerOutput();
+
+    const synthesizer = new SpeechSDK.SpeechSynthesizer(speechConfig, audioConfig);
+    synthesizer.speakTextAsync(
+        text,
+        result => {
+            synthesizer.close();
+            spchBtn.innerText = "Read Out Again";
+        },
+        error => {
+            synthesizer.close();
+            spchBtn.innerText = "Try Again";
+        });
 }
 
 const setValueOfAir = airData => {
@@ -87,9 +118,17 @@ const setComponentsOfAir = airData => {
 
 srchBtn.addEventListener("click", () => {
     errorLabel.innerText = "";
+    spchBtn.disabled = true;
+    spchBtn.innerText = "Read Out Loud";
+    spchBtn.style.backgroundColor = "#808080";
     let lat = parseFloat(latInp.value).toFixed(4);
     let lon = parseFloat(lonInp.value).toFixed(4);
     getAirQuality(lat, lon);
+})
+
+spchBtn.addEventListener("click", () => {
+    spchBtn.innerText = "Loading...";
+    getAudio();
 })
 
 const onPostionGatherError = e => {

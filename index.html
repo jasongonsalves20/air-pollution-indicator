@@ -35,12 +35,14 @@
 				step="0.0001"
 				class="loc-input" />
 			<button class="search-btn">Search</button>
+      <button class="speech-btn" style="background-color:grey" disabled="true">Read Out Loud</button>
 		</div>
         <br />
         <br />
 		<div class="air-info">
 			<h2 class="sub-heading">Air Quality Index</h2>
             <label for="aqi">Shows the AQI Value Of the given co-ordinates with reference to the AQI Table given below.</label>
+            <br />
             <br />
 			<span class="air-quality">...</span>
 			<span class="arr">&nbsp;&rarr;&nbsp;</span>
@@ -158,6 +160,7 @@
                 <br />
                 <br />
                 <br />
+                <br />
                 <h2 class="sub-heading">Still got Questions? Ask here...</h2>
                 <label for="quest">Got doubts or want to learn more? Just ask your queries below and we'll try our best to answer it.</label>
             <br />
@@ -169,5 +172,6 @@
 		</footer>
 	</div>
 	<script src="./script.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/microsoft-cognitiveservices-speech-sdk@latest/distrib/browser/microsoft.cognitiveservices.speech.sdk.bundle-min.js" defer></script>
 </body>
 </html>
