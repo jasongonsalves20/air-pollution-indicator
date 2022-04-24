@@ -47,7 +47,7 @@ Web App Url: https://air-pollution-indicator.azurewebsites.net/
 
 ### Video Demonstration
 
-![project-video-demonstration](https://github.com/jasongonsalves20/air-pollution-indicator/blob/main/demonstration/project-video-demonstration.mp4)
+https://user-images.githubusercontent.com/91821297/164995521-51f977e2-d8ee-4550-9265-8e5433caabbb.mp4
 
 ### Screenshots
 
